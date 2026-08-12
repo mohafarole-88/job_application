@@ -1,0 +1,10 @@
+<?php
+/**
+ * admin/logout.php
+ */
+session_start();
+require_once __DIR__ . '/../includes/admin-auth.php';
+
+admin_logout();
+header('Location: login.php');
+exit;

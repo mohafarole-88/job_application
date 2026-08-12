@@ -1,0 +1,511 @@
+/* ============================================================
+   Sam&Mun Care Ltd — Job Application Form
+   Design tokens
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Public+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Palette — drawn from the brand's overlapping teal/blue circles */
+  --color-bg: #F5F6F2;
+  --color-surface: #FFFFFF;
+  --color-surface-sunken: #EEF2EE;
+  --color-primary: #1F6F73;
+  --color-primary-dark: #154C50;
+  --color-primary-light: #E4F0EF;
+  --color-accent: #4FA8A0;
+  --color-accent-soft: #CFE8E4;
+  --color-text: #1C2624;
+  --color-text-muted: #5C6B67;
+  --color-border: #DBE3DF;
+  --color-border-strong: #B9C6C1;
+  --color-error: #B8412B;
+  --color-error-bg: #FBEDE9;
+  --color-success: #2E7D5B;
+  --color-success-bg: #E9F5EE;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --shadow-sm: 0 1px 2px rgba(28, 38, 36, 0.06);
+  --shadow-md: 0 4px 16px rgba(28, 38, 36, 0.08);
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--color-primary-dark);
+  margin: 0 0 var(--space-2) 0;
+}
+
+a { color: var(--color-primary); }
+
+button { font-family: inherit; }
+
+/* Visible focus ring everywhere — accessibility floor */
+:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+
+/* ============================================================
+   Page chrome
+   ============================================================ */
+.site-header {
+  background: var(--color-primary-dark);
+  color: #fff;
+  padding: var(--space-4) var(--space-5);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.site-header .logo-mark {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-accent), var(--color-primary));
+  position: relative;
+  flex-shrink: 0;
+}
+.site-header .logo-mark::after {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--color-primary-dark);
+  opacity: 0.35;
+  top: 6px;
+  left: 14px;
+}
+
+.site-header .brand-text {
+  line-height: 1.2;
+}
+.site-header .brand-text strong {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  display: block;
+}
+.site-header .brand-text span {
+  font-size: 0.78rem;
+  opacity: 0.8;
+  letter-spacing: 0.02em;
+}
+
+.page-shell {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4) var(--space-7);
+}
+
+.intro-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--space-6);
+}
+.intro-card p { color: var(--color-text-muted); }
+.intro-card .confidential-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  background: var(--color-primary-light);
+  padding: 3px 10px;
+  border-radius: 999px;
+  margin-bottom: var(--space-3);
+}
+
+/* ============================================================
+   Step progress — overlapping-circle motif echoes the brand mark
+   ============================================================ */
+.progress-track {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--space-6);
+  overflow-x: auto;
+  padding-bottom: var(--space-2);
+}
+.progress-step {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.progress-dot {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  border: 2px solid var(--color-border-strong);
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.progress-step.is-active .progress-dot {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+.progress-step.is-complete .progress-dot {
+  background: var(--color-accent-soft);
+  border-color: var(--color-accent);
+  color: var(--color-primary-dark);
+}
+.progress-connector {
+  width: 18px;
+  height: 2px;
+  background: var(--color-border-strong);
+  margin-left: -6px;
+  margin-right: -6px;
+  position: relative;
+  z-index: -1;
+}
+.progress-step.is-complete + .progress-connector,
+.progress-connector.is-complete {
+  background: var(--color-accent);
+}
+
+.progress-label {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-5);
+}
+.progress-label strong { color: var(--color-primary-dark); }
+
+/* ============================================================
+   Form sections
+   ============================================================ */
+.form-step {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+  display: none;
+}
+.form-step.is-active { display: block; animation: fadeIn 0.2s ease; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.form-step h2 {
+  font-size: 1.4rem;
+}
+.step-intro {
+  color: var(--color-text-muted);
+  font-size: 0.92rem;
+  margin-bottom: var(--space-5);
+}
+
+.field-group {
+  margin-bottom: var(--space-4);
+}
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+@media (max-width: 560px) {
+  .field-row { grid-template-columns: 1fr; }
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.88rem;
+  margin-bottom: var(--space-1);
+  color: var(--color-text);
+}
+label .optional-tag {
+  font-weight: 400;
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+}
+label .required-mark { color: var(--color-error); margin-left: 2px; }
+
+.field-hint {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin-top: var(--space-1);
+}
+
+input[type=text],
+input[type=email],
+input[type=tel],
+input[type=date],
+input[type=number],
+input[type=file],
+select,
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--color-text);
+  background: #fff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+input.field-error, select.field-error, textarea.field-error {
+  border-color: var(--color-error);
+}
+textarea { resize: vertical; min-height: 80px; }
+
+.error-message {
+  color: var(--color-error);
+  font-size: 0.82rem;
+  margin-top: var(--space-1);
+  display: none;
+}
+.error-message.is-visible { display: block; }
+
+/* Radio / checkbox groups */
+.choice-group {
+  display: flex;
+  gap: var(--space-4);
+  margin-top: var(--space-1);
+}
+.choice-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+.choice-option input { width: auto; }
+
+.checkbox-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--color-surface-sunken);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+}
+.checkbox-line input { width: auto; margin-top: 3px; }
+.checkbox-line p { margin: 0; font-size: 0.88rem; color: var(--color-text-muted); }
+
+/* ============================================================
+   Repeatable groups (employment history / qualifications)
+   ============================================================ */
+.repeat-item {
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  margin-bottom: var(--space-4);
+  position: relative;
+}
+.repeat-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-3);
+}
+.repeat-item-header h3 {
+  font-size: 0.95rem;
+  font-family: var(--font-body);
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0;
+}
+.btn-remove {
+  background: none;
+  border: none;
+  color: var(--color-error);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+.btn-remove:hover { text-decoration: underline; }
+
+.btn-add {
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+  border: 1.5px dashed var(--color-accent);
+  border-radius: var(--radius-md);
+  padding: 10px 16px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.15s ease;
+}
+.btn-add:hover { background: var(--color-accent-soft); }
+
+/* Mandatory training fixed table */
+.training-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.training-table th {
+  text-align: left;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+  padding: var(--space-2);
+  border-bottom: 2px solid var(--color-border);
+}
+.training-table td {
+  padding: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+.training-table input[type=date] { min-width: 140px; }
+.training-table input[type=checkbox] { width: 20px; height: 20px; }
+
+/* ============================================================
+   Nav buttons
+   ============================================================ */
+.step-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-6);
+  gap: var(--space-3);
+}
+.btn {
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+.btn:active { transform: scale(0.98); }
+.btn-primary {
+  background: var(--color-primary);
+  color: #fff;
+}
+.btn-primary:hover { background: var(--color-primary-dark); }
+.btn-secondary {
+  background: transparent;
+  color: var(--color-primary-dark);
+  border: 1.5px solid var(--color-border-strong);
+}
+.btn-secondary:hover { background: var(--color-surface-sunken); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ============================================================
+   Review step
+   ============================================================ */
+.review-section {
+  margin-bottom: var(--space-5);
+}
+.review-section h3 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-primary);
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+.review-row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: 6px 0;
+  font-size: 0.9rem;
+  border-bottom: 1px dashed var(--color-border);
+}
+.review-row dt { color: var(--color-text-muted); font-weight: 500; }
+.review-row dd { margin: 0; text-align: right; font-weight: 600; max-width: 60%; }
+.review-edit-link {
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--color-primary);
+  background: none;
+  border: none;
+}
+
+/* ============================================================
+   Success state
+   ============================================================ */
+.success-card {
+  text-align: center;
+  padding: var(--space-7) var(--space-5);
+}
+.success-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--color-success-bg);
+  color: var(--color-success);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--space-4);
+  font-size: 2rem;
+}
+.application-number {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--color-primary-dark);
+  background: var(--color-primary-light);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-md);
+  display: inline-block;
+  margin: var(--space-4) 0;
+  letter-spacing: 0.02em;
+}
+
+.form-status-banner {
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: 0.88rem;
+  margin-bottom: var(--space-5);
+  display: none;
+}
+.form-status-banner.is-visible { display: block; }
+.form-status-banner.is-error {
+  background: var(--color-error-bg);
+  color: var(--color-error);
+}
