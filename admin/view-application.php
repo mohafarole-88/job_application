@@ -37,7 +37,7 @@ $ref2 = $references['previous'] ?? null;
 
 $pdfDownloadUrl = null;
 if (!empty($app['pdf_path']) && is_file($app['pdf_path'])) {
-    $pdfDownloadUrl = 'download.php?app=' . urlencode($app['application_number'])
+    $pdfDownloadUrl = '../public/download.php?app=' . urlencode($app['application_number'])
         . '&token=' . urlencode(generate_download_token($app['application_number']));
 }
 
@@ -83,9 +83,15 @@ $docTypeLabels = ['photo' => 'Photo', 'cv' => 'CV', 'certificate' => 'Certificat
       </div>
       <div style="text-align:right;">
         <span class="status-badge status-<?php echo esc($app['status']); ?>"><?php echo esc($app['status']); ?></span>
-        <?php if ($pdfDownloadUrl): ?>
-          <div style="margin-top:10px;"><a class="btn btn-secondary" href="<?php echo esc($pdfDownloadUrl); ?>">Download PDF</a></div>
-        <?php else: ?>
+        <div style="margin-top:10px; display:flex; gap:8px; justify-content:flex-end; flex-wrap:wrap;">
+          <?php if ($pdfDownloadUrl): ?>
+            <a class="btn btn-secondary" href="<?php echo esc($pdfDownloadUrl); ?>">Download PDF</a>
+          <?php endif; ?>
+          <?php if ($pdfDownloadUrl || $documents): ?>
+            <a class="btn btn-primary" href="download-all.php?id=<?php echo (int) $app['id']; ?>">Download All (.zip)</a>
+          <?php endif; ?>
+        </div>
+        <?php if (!$pdfDownloadUrl): ?>
           <div class="detail-meta" style="margin-top:10px;">PDF not yet generated</div>
         <?php endif; ?>
       </div>

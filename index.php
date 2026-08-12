@@ -77,7 +77,7 @@
 
     <div class="landing-actions">
       <a href="public/apply.php" class="btn btn-primary">Start Your Application</a>
-      <a href="admin/login.php" class="btn btn-secondary">Admin Login</a>
+      <a href="admin/login.php" class="btn btn-secondary">Login</a>
     </div>
   </div>
 </div>
