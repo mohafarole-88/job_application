@@ -6,46 +6,24 @@
 session_start();
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../includes/admin-auth.php';
+require_once __DIR__ . '/../includes/application-search.php';
 require_once __DIR__ . '/../config/database.php';
 
 require_admin_auth();
 
 $pdo = get_db();
 
-// ---- Read filters from the query string ----
-$search   = trim((string) ($_GET['q'] ?? ''));
-$status   = trim((string) ($_GET['status'] ?? ''));
-$position = trim((string) ($_GET['position'] ?? ''));
+// ---- Read filters + pagination ----
+$filters = build_application_filters($_GET);
+$search = $filters['search'];
+$status = $filters['status'];
+$position = $filters['position'];
+$whereSql = $filters['whereSql'];
+$params = $filters['params'];
+$validStatuses = APPLICATION_VALID_STATUSES;
+
 $page     = max(1, (int) ($_GET['page'] ?? 1));
 $perPage  = 20;
-
-$validStatuses = ['submitted', 'reviewed', 'shortlisted', 'rejected', 'archived'];
-if ($status !== '' && !in_array($status, $validStatuses, true)) {
-    $status = '';
-}
-
-// ---- Build the WHERE clause safely (parameterized) ----
-$where = [];
-$params = [];
-
-if ($search !== '') {
-    $where[] = '(first_name LIKE :search1 OR surname LIKE :search2 OR application_number LIKE :search3 OR email LIKE :search4)';
-    $like = '%' . $search . '%';
-    $params['search1'] = $like;
-    $params['search2'] = $like;
-    $params['search3'] = $like;
-    $params['search4'] = $like;
-}
-if ($status !== '') {
-    $where[] = 'status = :status';
-    $params['status'] = $status;
-}
-if ($position !== '') {
-    $where[] = 'position_applied LIKE :position';
-    $params['position'] = '%' . $position . '%';
-}
-
-$whereSql = $where ? ('WHERE ' . implode(' AND ', $where)) : '';
 
 // ---- Total count for pagination ----
 $countStmt = $pdo->prepare("SELECT COUNT(*) FROM applications {$whereSql}");
@@ -121,12 +99,19 @@ function esc(?string $v): string
   </div>
 
   <div class="card">
-    <p class="results-count">
-      <?php echo $totalCount; ?> application<?php echo $totalCount === 1 ? '' : 's'; ?> found
-      <?php if ($search !== '' || $status !== '' || $position !== ''): ?>
-        — <a href="dashboard.php">clear filters</a>
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+      <p class="results-count" style="margin:0;">
+        <?php echo $totalCount; ?> application<?php echo $totalCount === 1 ? '' : 's'; ?> found
+        <?php if ($search !== '' || $status !== '' || $position !== ''): ?>
+          — <a href="dashboard.php">clear filters</a>
+        <?php endif; ?>
+      </p>
+      <?php if ($totalCount > 0): ?>
+        <a class="btn btn-primary" href="download-all-applications.php<?php echo qs(); ?>">
+          Download All Forms (.zip)<?php echo ($search !== '' || $status !== '' || $position !== '') ? ' — filtered' : ''; ?>
+        </a>
       <?php endif; ?>
-    </p>
+    </div>
 
     <?php if (!$applications): ?>
       <div class="empty-state">No applications match these filters.</div>
