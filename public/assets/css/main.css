@@ -87,24 +87,11 @@ button { font-family: inherit; }
   gap: var(--space-3);
 }
 
-.site-header .logo-mark {
+.header-logo-img {
   width: 34px;
   height: 34px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--color-accent), var(--color-primary));
-  position: relative;
   flex-shrink: 0;
-}
-.site-header .logo-mark::after {
-  content: "";
-  position: absolute;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--color-primary-dark);
-  opacity: 0.35;
-  top: 6px;
-  left: 14px;
+  display: block;
 }
 
 .site-header .brand-text {

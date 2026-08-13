@@ -62,7 +62,7 @@ $timedOut = isset($_GET['timeout']);
 <body>
 <div class="login-shell">
   <div class="card login-card">
-    <div class="logo-mark" aria-hidden="true"></div>
+    <img src="assets/images/logo-icon-lg.png" alt="Sam&amp;Mun Care Ltd" class="login-logo-img">
     <h1>Admin Login</h1>
     <p class="subtitle">Sam&amp;Mun Care Ltd — Job Application Portal</p>
 

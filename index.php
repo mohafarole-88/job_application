@@ -30,24 +30,11 @@
     width: 100%;
     text-align: center;
   }
-  .landing-card .logo-mark {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--color-accent), var(--color-primary));
-    position: relative;
+  .landing-card .landing-logo-img {
+    display: block;
+    width: 72px;
+    height: 72px;
     margin: 0 auto var(--space-4);
-  }
-  .landing-card .logo-mark::after {
-    content: "";
-    position: absolute;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: var(--color-primary-dark);
-    opacity: 0.35;
-    top: 8px;
-    left: 20px;
   }
   .landing-card h1 { font-size: 1.5rem; margin-bottom: var(--space-2); }
   .landing-card p.tagline {
@@ -71,13 +58,13 @@
 
 <div class="landing-shell">
   <div class="landing-card">
-    <div class="logo-mark" aria-hidden="true"></div>
+    <img src="public/assets/images/logo-icon-lg.png" alt="Sam&amp;Mun Care Ltd" class="landing-logo-img">
     <h1>Sam&amp;Mun Care Ltd</h1>
     <p class="tagline">Quality care especially for you — Job Application Portal</p>
 
     <div class="landing-actions">
       <a href="public/apply.php" class="btn btn-primary">Start Your Application</a>
-      <a href="admin/login.php" class="btn btn-secondary">Login</a>
+      <a href="admin/login.php" class="btn btn-secondary">Admin Login</a>
     </div>
   </div>
 </div>

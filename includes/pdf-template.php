@@ -15,6 +15,29 @@ function pdf_esc(?string $value): string
     return htmlspecialchars((string) ($value ?? ''), ENT_QUOTES, 'UTF-8');
 }
 
+/**
+ * Reads the brand logo and returns it as a base64 data URI. Embedding
+ * it directly into the HTML avoids Dompdf ever needing filesystem/
+ * remote access to load it, which matters because generate-pdf.php
+ * deliberately disables isRemoteEnabled and chroots local file access
+ * for security — a data URI is just inline text, so neither setting
+ * gets in the way of it rendering.
+ */
+function pdf_logo_data_uri(): string
+{
+    static $cached = null;
+    if ($cached !== null) {
+        return $cached;
+    }
+    $path = __DIR__ . '/assets/logo-source.png';
+    if (!is_file($path)) {
+        $cached = '';
+        return $cached;
+    }
+    $cached = 'data:image/png;base64,' . base64_encode(file_get_contents($path));
+    return $cached;
+}
+
 /** Renders "Label: value" inline, matching the benchmark's inline style. */
 function pdf_field(string $label, ?string $value): string
 {
@@ -62,11 +85,14 @@ function render_application_pdf_html(array $app, array $employment, array $quali
         }
         .pdf-header {
             position: fixed;
-            top: -55px;
+            top: -68px;
             left: 0;
             right: 0;
-            height: 45px;
+            height: 60px;
             text-align: center;
+        }
+        .pdf-header .logo-img {
+            height: 38px;
         }
         .pdf-header .brand {
             font-size: 14px;
@@ -155,8 +181,12 @@ function render_application_pdf_html(array $app, array $employment, array $quali
     <body>
 
     <div class="pdf-header">
-        <div class="brand"><?php echo pdf_esc(COMPANY_NAME); ?></div>
-        <div class="tagline"><?php echo pdf_esc(COMPANY_TAGLINE); ?></div>
+        <?php $logoUri = pdf_logo_data_uri(); if ($logoUri): ?>
+            <img class="logo-img" src="<?php echo $logoUri; ?>" alt="">
+        <?php else: ?>
+            <div class="brand"><?php echo pdf_esc(COMPANY_NAME); ?></div>
+            <div class="tagline"><?php echo pdf_esc(COMPANY_TAGLINE); ?></div>
+        <?php endif; ?>
     </div>
     <div class="pdf-footer">
         <?php echo pdf_esc(COMPANY_ADDRESS_LINE_1); ?><br>

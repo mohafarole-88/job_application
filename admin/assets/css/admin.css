@@ -53,15 +53,7 @@ a { color: var(--color-primary); }
   justify-content: space-between;
 }
 .admin-header .brand { display: flex; align-items: center; gap: 10px; }
-.admin-header .logo-mark {
-  width: 28px; height: 28px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--color-accent), var(--color-primary));
-  position: relative;
-}
-.admin-header .logo-mark::after {
-  content: ""; position: absolute; width: 18px; height: 18px; border-radius: 50%;
-  background: var(--color-primary-dark); opacity: 0.35; top: 5px; left: 11px;
-}
+.header-logo-img { width: 28px; height: 28px; display: block; }
 .admin-header strong { font-family: var(--font-display); font-size: 1.05rem; }
 .admin-header .who { font-size: 0.85rem; opacity: 0.85; display: flex; align-items: center; gap: 14px; }
 .admin-header a.logout-link { color: #fff; text-decoration: underline; font-size: 0.85rem; }
@@ -79,8 +71,7 @@ a { color: var(--color-primary); }
 /* ---- Login ---- */
 .login-shell { max-width: 380px; margin: 80px auto; padding: 0 20px; }
 .login-card { text-align: left; }
-.login-card .logo-mark { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--color-accent), var(--color-primary)); margin: 0 auto 12px; position: relative; }
-.login-card .logo-mark::after { content: ""; position: absolute; width: 26px; height: 26px; border-radius: 50%; background: var(--color-primary-dark); opacity: 0.35; top: 7px; left: 16px; }
+.login-card .login-logo-img { display: block; width: 64px; height: 64px; margin: 0 auto 12px; }
 .login-card h1 { text-align: center; font-size: 1.3rem; }
 .login-card p.subtitle { text-align: center; color: var(--color-text-muted); font-size: 0.88rem; margin-bottom: 20px; }
 

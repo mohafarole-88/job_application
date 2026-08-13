@@ -61,7 +61,7 @@ $csrfToken = csrf_token();
 <body>
 
 <header class="site-header">
-  <div class="logo-mark" aria-hidden="true"></div>
+  <img src="assets/images/logo-icon.png" alt="Sam&amp;Mun Care Ltd" class="header-logo-img">
   <div class="brand-text">
     <strong>Sam&amp;Mun Care Ltd</strong>
     <span>Quality care especially for you</span>
