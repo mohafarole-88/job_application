@@ -81,11 +81,64 @@ $timedOut = isset($_GET['timeout']);
       </div>
       <div class="field-group">
         <label for="password">Password</label>
-        <input type="password" id="password" name="password" required>
+        <style>
+          .pw-field-wrap { position: relative; display: block; }
+          .pw-field-wrap input#password { width: 100%; padding-right: 44px; box-sizing: border-box; }
+          .pw-toggle-btn {
+            position: absolute;
+            top: 50%;
+            right: 8px;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+            line-height: 0;
+          }
+          .pw-toggle-btn:hover { color: #374151; }
+          .pw-toggle-btn:focus { outline: 2px solid #93c5fd; outline-offset: 2px; border-radius: 4px; }
+          .pw-toggle-btn svg { width: 20px; height: 20px; }
+          .pw-toggle-btn .pw-icon-hide { display: none; }
+        </style>
+        <div class="pw-field-wrap">
+          <input type="password" id="password" name="password" required>
+          <button type="button" class="pw-toggle-btn" id="pwToggleBtn" aria-label="Show password" aria-pressed="false">
+            <svg class="pw-icon-show" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <svg class="pw-icon-hide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a21.6 21.6 0 0 1 5.06-6.06M9.9 4.24A10.94 10.94 0 0 1 12 4c7 0 11 7 11 7a21.6 21.6 0 0 1-2.66 3.79"></path>
+              <path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"></path>
+              <line x1="1" y1="1" x2="23" y2="23"></line>
+            </svg>
+          </button>
+        </div>
       </div>
       <button type="submit" class="btn btn-primary">Sign In</button>
     </form>
   </div>
 </div>
+<script>
+  (function () {
+    var pwInput = document.getElementById('password');
+    var toggleBtn = document.getElementById('pwToggleBtn');
+    if (!pwInput || !toggleBtn) return;
+    var showIcon = toggleBtn.querySelector('.pw-icon-show');
+    var hideIcon = toggleBtn.querySelector('.pw-icon-hide');
+    toggleBtn.addEventListener('click', function () {
+      var isHidden = pwInput.type === 'password';
+      pwInput.type = isHidden ? 'text' : 'password';
+      toggleBtn.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
+      toggleBtn.setAttribute('aria-pressed', isHidden ? 'true' : 'false');
+      showIcon.style.display = isHidden ? 'none' : 'block';
+      hideIcon.style.display = isHidden ? 'block' : 'none';
+    });
+  })();
+</script>
 </body>
 </html>
