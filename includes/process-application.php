@@ -77,7 +77,7 @@ try {
             :dbs_status, :dbs_level, :dbs_expiry_date, :dbs_online_access,
             :work_permit_required, :languages_fluent, :languages_written, :languages_basic,
             :declaration_accepted, :signature_name, :signature_date,
-            "submitted", NOW(), NOW()
+            :status, NOW(), NOW()
         )';
 
         $stmt = $pdo->prepare($insertSql);
@@ -127,6 +127,7 @@ try {
             'declaration_accepted'        => $fields['declaration_accepted'],
             'signature_name'              => $fields['signature_name'],
             'signature_date'              => $fields['signature_date'],
+            'status'                      => 'submitted',
         ]);
         $applicationId = (int) $pdo->lastInsertId();
         error_log('[job-application-system][DEBUG] Application row inserted, id=' . $applicationId);
