@@ -13,8 +13,9 @@ function get_db(): PDO
 
     if ($pdo === null) {
         $dsn = sprintf(
-            'mysql:host=%s;dbname=%s;charset=%s',
+            'mysql:host=%s;port=%s;dbname=%s;charset=%s',
             DB_HOST,
+            DB_PORT,
             DB_NAME,
             DB_CHARSET
         );
@@ -26,9 +27,13 @@ function get_db(): PDO
                 PDO::ATTR_EMULATE_PREPARES   => false,
             ]);
         } catch (PDOException $e) {
-            // Never leak connection details (host, credentials) to the client.
+            // Never leak connection details (host, credentials) to the client
+            // in the public-facing message — but keep the original exception
+            // attached as "previous" so APP_DEBUG mode can still show the
+            // real MySQL error (wrong credentials, unknown database, etc.)
+            // without ever printing the DSN/host/user themselves.
             error_log('Database connection failed: ' . $e->getMessage());
-            throw new RuntimeException('Database connection failed.');
+            throw new RuntimeException('Database connection failed.', 0, $e);
         }
     }
 

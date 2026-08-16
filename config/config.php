@@ -14,10 +14,11 @@
 define('APP_DEBUG', filter_var(getenv('APP_DEBUG') ?: 'true', FILTER_VALIDATE_BOOLEAN));
 
 // ---- Database ----
-define('DB_HOST', getenv('DB_HOST') ?: 'db.fr-roub1.bengt.wasmernet.com');
-define('DB_NAME', getenv('DB_NAME') ?: 'db_e9cd6b7d');
-define('DB_USER', getenv('DB_USER') ?: 'user_b6f69a2f');
-define('DB_PASS', getenv('DB_PASS') ?: 'pw_0p6kZbPIxv7UkTmBfZFKR63uZwcgJ2yz');
+define('DB_HOST', getenv('DB_HOST') ?: '127.0.0.1');
+define('DB_PORT', getenv('DB_PORT') ?: '3306');
+define('DB_NAME', getenv('DB_NAME') ?: 'job_application_system');
+define('DB_USER', getenv('DB_USER') ?: 'app_user');
+define('DB_PASS', getenv('DB_PASS') ?: '');
 define('DB_CHARSET', 'utf8mb4');
 
 // ---- Storage ----
@@ -59,7 +60,7 @@ ini_set('log_errors', '1');
 error_reporting(E_ALL);
 
 // ---- PDF generation & secure download (Phase 5) ----
-define('PDF_DOWNLOAD_SECRET', getenv('PDF_DOWNLOAD_SECRET') ?: 'c0456abeb3fc5f13ea666921f90b753f66560227a7d4b080548fccc222a006fb');
+define('PDF_DOWNLOAD_SECRET', getenv('PDF_DOWNLOAD_SECRET') ?: 'CHANGE_ME_TO_A_LONG_RANDOM_VALUE_IN_PRODUCTION');
 define('PDF_DOWNLOAD_TOKEN_TTL', 60 * 60 * 24 * 7); // download links valid for 7 days
 
 define('COMPANY_NAME', 'Sam&Mun Care Ltd');
