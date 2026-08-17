@@ -5,6 +5,7 @@
  */
 session_start();
 require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../includes/csrf.php';
 require_once __DIR__ . '/../includes/admin-auth.php';
 require_once __DIR__ . '/../includes/application-search.php';
 require_once __DIR__ . '/../config/database.php';
@@ -98,6 +99,19 @@ function esc(?string $v): string
     </form>
   </div>
 
+  <?php if (isset($_GET['regen_success']) || isset($_GET['regen_error'])): ?>
+    <?php if (isset($_GET['regen_error'])): ?>
+      <div class="alert alert-error">Something went wrong regenerating PDFs. Check the server error log for details.</div>
+    <?php else: ?>
+      <?php $rSuccess = (int) $_GET['regen_success']; $rFailed = (int) ($_GET['regen_failed'] ?? 0); $rMore = ($_GET['regen_more'] ?? '0') === '1'; ?>
+      <div class="alert <?php echo $rFailed > 0 ? 'alert-error' : 'alert-success'; ?>">
+        Regenerated <?php echo $rSuccess; ?> PDF<?php echo $rSuccess === 1 ? '' : 's'; ?>.
+        <?php if ($rFailed > 0): ?> <?php echo $rFailed; ?> failed — check the server error log.<?php endif; ?>
+        <?php if ($rMore): ?> More applications match than were processed this run — click "Regenerate All PDFs" again to continue.<?php endif; ?>
+      </div>
+    <?php endif; ?>
+  <?php endif; ?>
+
   <div class="card">
     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
       <p class="results-count" style="margin:0;">
@@ -107,9 +121,18 @@ function esc(?string $v): string
         <?php endif; ?>
       </p>
       <?php if ($totalCount > 0): ?>
-        <a class="btn btn-primary" href="download-all-applications.php<?php echo qs(); ?>">
-          Download All Forms (.zip)<?php echo ($search !== '' || $status !== '' || $position !== '') ? ' — filtered' : ''; ?>
-        </a>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <form method="post" action="regenerate-all-pdfs.php" onsubmit="return confirm('Regenerate PDFs for all <?php echo $totalCount; ?> matching application(s)? This replaces any existing PDFs too.');">
+            <input type="hidden" name="csrf_token" value="<?php echo esc(csrf_token()); ?>">
+            <input type="hidden" name="q" value="<?php echo esc($search); ?>">
+            <input type="hidden" name="status" value="<?php echo esc($status); ?>">
+            <input type="hidden" name="position" value="<?php echo esc($position); ?>">
+            <button type="submit" class="btn btn-secondary">Regenerate All PDFs</button>
+          </form>
+          <a class="btn btn-primary" href="download-all-applications.php<?php echo qs(); ?>">
+            Download All Forms (.zip)<?php echo ($search !== '' || $status !== '' || $position !== '') ? ' — filtered' : ''; ?>
+          </a>
+        </div>
       <?php endif; ?>
     </div>
 
