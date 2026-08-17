@@ -16,9 +16,9 @@ define('APP_DEBUG', filter_var(getenv('APP_DEBUG') ?: 'true', FILTER_VALIDATE_BO
 // ---- Database ----
 define('DB_HOST', getenv('DB_HOST') ?: 'db.fr-roub1.bengt.wasmernet.com');
 define('DB_PORT', getenv('DB_PORT') ?: '20184');
-define('DB_NAME', getenv('DB_NAME') ?: 'db_e9cd6b7d');
-define('DB_USER', getenv('DB_USER') ?: 'user_b6f69a2f');
-define('DB_PASS', getenv('DB_PASS') ?: 'pw_0p6kZbPIxv7UkTmBfZFKR63uZwcgJ2yz');
+define('DB_NAME', getenv('DB_NAME') ?: 'db_58f75ce3');
+define('DB_USER', getenv('DB_USER') ?: 'user_431b80b1');
+define('DB_PASS', getenv('DB_PASS') ?: 'pw_MSrOdNl7qRXe9q8Hsf8ch8vPgC2uHgVK');
 define('DB_CHARSET', 'utf8mb4');
 
 // ---- Storage ----
