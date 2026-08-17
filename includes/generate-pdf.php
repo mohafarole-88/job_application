@@ -8,6 +8,7 @@
 
 require_once __DIR__ . '/pdf-template.php';
 require_once __DIR__ . '/application-data.php';
+require_once __DIR__ . '/helpers.php'; // needed internally for application_storage_dir()
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
