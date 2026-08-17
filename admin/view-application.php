@@ -4,6 +4,7 @@
  */
 session_start();
 require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../includes/csrf.php';
 require_once __DIR__ . '/../includes/admin-auth.php';
 require_once __DIR__ . '/../includes/application-data.php';
 require_once __DIR__ . '/../includes/download-token.php';
@@ -90,9 +91,19 @@ $docTypeLabels = ['photo' => 'Photo', 'cv' => 'CV', 'certificate' => 'Certificat
           <?php if ($pdfDownloadUrl || $documents): ?>
             <a class="btn btn-primary" href="download-all.php?id=<?php echo (int) $app['id']; ?>">Download All (.zip)</a>
           <?php endif; ?>
+          <form method="post" action="regenerate-pdf.php">
+            <input type="hidden" name="csrf_token" value="<?php echo esc(csrf_token()); ?>">
+            <input type="hidden" name="id" value="<?php echo (int) $app['id']; ?>">
+            <button type="submit" class="btn btn-secondary"><?php echo $pdfDownloadUrl ? 'Regenerate PDF' : 'Generate PDF'; ?></button>
+          </form>
         </div>
         <?php if (!$pdfDownloadUrl): ?>
           <div class="detail-meta" style="margin-top:10px;">PDF not yet generated</div>
+        <?php endif; ?>
+        <?php if (isset($_GET['pdf']) && $_GET['pdf'] === 'regenerated'): ?>
+          <div class="alert alert-success" style="margin-top:10px;">PDF generated successfully.</div>
+        <?php elseif (isset($_GET['pdf']) && $_GET['pdf'] === 'error'): ?>
+          <div class="alert alert-error" style="margin-top:10px;">PDF generation failed. Check the server error log for details.</div>
         <?php endif; ?>
       </div>
     </div>
