@@ -54,6 +54,7 @@ function esc(?string $v): string
   <?php endif; ?>
 
   <div class="card">
+    <div class="table-responsive">
     <table class="data-table">
       <thead>
         <tr>
@@ -98,6 +99,7 @@ function esc(?string $v): string
         <?php endforeach; ?>
       </tbody>
     </table>
+    </div>
   </div>
 </main>
 </body>

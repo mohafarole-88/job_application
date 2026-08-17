@@ -128,6 +128,7 @@ $docTypeLabels = ['photo' => 'Photo', 'cv' => 'CV', 'certificate' => 'Certificat
   <?php if ($employment): ?>
   <div class="card detail-section">
     <h3>Employment History</h3>
+    <div class="table-responsive">
     <table class="mini-table">
       <thead><tr><th>Company</th><th>From</th><th>To</th><th>Position</th><th>Reason for leaving</th></tr></thead>
       <tbody>
@@ -142,12 +143,14 @@ $docTypeLabels = ['photo' => 'Photo', 'cv' => 'CV', 'certificate' => 'Certificat
         <?php endforeach; ?>
       </tbody>
     </table>
+    </div>
   </div>
   <?php endif; ?>
 
   <?php if ($qualifications): ?>
   <div class="card detail-section">
     <h3>Qualifications &amp; Training</h3>
+    <div class="table-responsive">
     <table class="mini-table">
       <thead><tr><th>Course</th><th>Date</th><th>Awarding body</th></tr></thead>
       <tbody>
@@ -160,11 +163,13 @@ $docTypeLabels = ['photo' => 'Photo', 'cv' => 'CV', 'certificate' => 'Certificat
         <?php endforeach; ?>
       </tbody>
     </table>
+    </div>
   </div>
   <?php endif; ?>
 
   <div class="card detail-section">
     <h3>Mandatory Training</h3>
+    <div class="table-responsive">
     <table class="mini-table">
       <thead><tr><th>Course</th><th>Date completed</th><th>Needs to attend</th></tr></thead>
       <tbody>
@@ -178,6 +183,7 @@ $docTypeLabels = ['photo' => 'Photo', 'cv' => 'CV', 'certificate' => 'Certificat
         <?php endforeach; ?>
       </tbody>
     </table>
+    </div>
   </div>
 
   <?php if (!empty($app['reasonable_adjustment']) || $app['employee_relationship'] === 'yes'): ?>

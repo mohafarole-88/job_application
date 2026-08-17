@@ -116,6 +116,7 @@ function esc(?string $v): string
     <?php if (!$applications): ?>
       <div class="empty-state">No applications match these filters.</div>
     <?php else: ?>
+      <div class="table-responsive">
       <table class="data-table">
         <thead>
           <tr>
@@ -142,6 +143,7 @@ function esc(?string $v): string
           <?php endforeach; ?>
         </tbody>
       </table>
+      </div>
 
       <?php if ($totalPages > 1): ?>
       <div class="pagination">
